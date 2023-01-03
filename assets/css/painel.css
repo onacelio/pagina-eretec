@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins";
+    font-weight: bold;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #180D59;
+}
+
+.conteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 500px;
+}
+
+.icon {
+    width: 200px;
+    height: 200px;
+    border: 3px solid #CFF846;
+    border-radius: 50%;
+    padding: 2px;
+}
+
+.icon img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.email {
+    height: 30px;
+    text-align: center;
+    color: #F8FAFF;
+}
+
+.links {
+    width: 326px;
+    height: 45px;
+    border: 2px solid #CFF846;
+    border-radius: 3px;
+    color: #F8FAFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.links a {
+    text-decoration: none;
+}
+
+.botoes {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+button {
+    border: none;
+    background-color: #21DF99;
+    padding: 0.4rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: #F8FAFF;
+}
+
+button:hover {
+    background-color: #21DF9991;
+    transition: 0.5s;
+}
+
+button a {
+    text-decoration: none;
+    font-weight: 500;
+    color: #F8FAFF;
+}
+
+.controle {
+    width: 75%;
+}

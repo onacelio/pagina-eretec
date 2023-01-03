@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+header {
+    background-color: #180D59;
+    font-family: "Zen Dots", cursive;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 10px;
+    color: #F8FAFF;
+    letter-spacing: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h2{
+    font-family: "Zen Dots";
+}
+
+button {
+    border: none;
+    background-color: #21DF99;
+    padding: 0.4rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    color: #F8FAFF;
+}
+
+button:hover {
+    background-color: #21DF9991;
+    transition: 0.5s;
+}
+
+header button a {
+    text-decoration: none;
+    font-weight: 500;
+    color: #F8FAFF;
+}
+
+form {
+    width: 100%;
+    padding: 10px;
+}
+
+table {
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+table th {
+    text-transform: uppercase;
+}
+
+table th, td {
+    text-align: left;
+    padding: 3px 7px;
+    word-wrap: break-word;
+}
+
+table .acao {
+    text-align: center;
+}
