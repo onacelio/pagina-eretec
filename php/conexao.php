@@ -2,7 +2,7 @@
 
     $usuario = 'root';
     $senha = '';
-    $database = 'controledeusuarios';
+    $database = 'credenciamento';
     $host = 'localhost';
 
     $mysqli = new mysqli($host, $usuario, $senha, $database);

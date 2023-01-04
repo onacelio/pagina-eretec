@@ -12,16 +12,20 @@
         $confirmpassword = filter_input(INPUT_POST, 'confirmpassword');
         $gender = filter_input(INPUT_POST, 'gender');
 
-        if($email == 'administrador@admin.com') {
-            echo "<script>window.alert('Não é permitido usar o mesmo e-mail do administrador!')</script>";
+        $sqlCode = "SELECT * FROM usuarios WHERE email = '$email' LIMIT 1";
+        $sqlQuery = $mysqli->query($sqlCode) or die("Falha na execução do código SQL: " . $mysqli->error);
+        $usuario = $sqlQuery->fetch_assoc();
+
+        if($email === $usuario['email']) {
+            echo "<script>window.alert('Falha ao cadastrar, e-mail já cadastrado')</script>";
         } else {
             if($password === $confirmpassword) {
                 $encrypted = password_hash($password, PASSWORD_DEFAULT);
     
-                $mysqli->query("INSERT INTO usuarios VALUES(0, '$firstname', '$lastname', '$email', '$date', '$encrypted', '$gender', now())") or die("Erro ao tentar cadastrar registro, nome: $firstname, sobrenome: $lastname, email: $email, senha: $encrypted, data: $date, genero: $gender");
+                $mysqli->query("INSERT INTO usuarios VALUES(0, 'user', '$firstname', '$lastname', '$email', '$date', '$encrypted', '$gender', '', now())") or die("Erro ao tentar cadastrar registro, nome: $firstname, sobrenome: $lastname, email: $email, senha: $encrypted, data: $date, genero: $gender <br> $mysqli->error");
                 
                 header('Location: index.php');
-    
+
             } else{
                 echo "<script>window.alert('As senhas devem ser iguais')</script>";
             }

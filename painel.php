@@ -8,7 +8,7 @@
 
 <?php
 
-    if($_SESSION['email'] == 'administrador@admin.com') {
+    if($_SESSION['level'] === 'admin') {
 
 ?>
 
@@ -74,6 +74,7 @@
 </html>
 
 <?php
+
     } else {
 
 ?>
@@ -94,7 +95,13 @@
 </head>
 <body>
     <section class="conteudo">
-        <div class="icon"><img src="https://source.unsplash.com/random/" alt=""></div>
+        <div class="icon"><img src="<?php 
+                                        if($_SESSION['imagem'] === '') {
+                                            echo "assets/img/default-avatar.png";
+                                        } else {
+                                            echo $_SESSION['imagem'];
+                                        }
+                                    ?>" alt=""></div>
         <div class="email">
             <?php echo $_SESSION['email'];?>
         </div>
