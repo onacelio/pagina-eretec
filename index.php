@@ -22,10 +22,12 @@
                 }
 
                 $_SESSION['id'] = $usuario['id'];
+                $_SESSION['level'] = $usuario['level'];
                 $_SESSION['nome'] = $usuario['firstname'];
                 $_SESSION['sobrenome'] = $usuario['lastname'];
                 $_SESSION['email'] = $usuario['email'];
                 $_SESSION['nascimento'] = $usuario['date_birth'];
+                $_SESSION['imagem'] = $usuario['image'];
                 $_SESSION['genero'] = $usuario['gender'];
                 header('Location: painel.php');
             } else {

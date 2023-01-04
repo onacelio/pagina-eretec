@@ -8,26 +8,35 @@
 
     include('php/conexao.php'); 
 
-    if(isset($_POST['email'])) {
+    if(isset($_FILES['image'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];
+        $image = $_FILES['image'];
         $encrypted = password_hash($password, PASSWORD_DEFAULT);
         $id = $_SESSION['id'];
 
-        if(strlen($email) > 0 && strlen($password) > 0){
+        if($image['error']) {
+            die('Falha ao enviar arquivo');
+        }
+
+        if($image['size'] > 2097152){
+            die("Imagem muito grande! máximo de 2MB");
+        } 
+
+        $pasta = 'uploaded-img/';
+        $newNameImage = uniqid();
+        $extension =  strtolower(pathinfo($image['name'], PATHINFO_EXTENSION));
+
+        $upload = move_uploaded_file($image['tmp_name'], $pasta . $newNameImage . "." . $extension);
+
+        if($upload) {
+            $uparImagem = $mysqli->query("UPDATE usuarios SET image = 'uploaded-img/$newNameImage.$extension' WHERE id = $id") or die ($mysqli->error);
             $sqlAlterarUser = $mysqli->query("UPDATE usuarios SET email = '$email' WHERE id = $id") or die ($mysqli->error);
             $alterarUserPassword = $mysqli->query("UPDATE usuarios SET user_password = '$encrypted' WHERE id = $id") or die ($mysqli->error);
             session_destroy();
             header('Location: index.php');
-        } else if(strlen($email) > 0 && strlen($password) == 0) {
-            $sqlAlterarUser = $mysqli->query("UPDATE usuarios SET email = '$email' WHERE id = $id") or die ($mysqli->error);
-            session_destroy();
-            header('Location: index.php');
-        } else if(strlen($password) > 0 && strlen($email) == 0){
-            $sqlAlterarUser = $mysqli->query("UPDATE usuarios SET user_password = '$encrypted' WHERE id = $id") or die ($mysqli->error);
-            session_destroy();
-            header('Location: index.php');
         }
+
     }
 
 ?>
@@ -45,7 +54,7 @@
 <body>
     <section class="container">
         <div class="form">
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-header">
                     <div class="title">
                         <h1>ALTERAR</h1>
@@ -58,12 +67,17 @@
                 <div class="input-group">
                     <div class="input-box">
                         <label for="email">E-mail</label>
-                        <input id="email" type="email" name="email" placeholder="Digite seu novo e-mail" >
+                        <input id="email" type="email" name="email" placeholder="Digite seu novo e-mail" required value="<?php echo $_SESSION['email']?>">
                     </div>
 
                     <div class="input-box">
                         <label for="password">Senha</label>
-                        <input id="password" type="password" name="password" placeholder="Digite sua nova senha" >
+                        <input id="password" type="password" name="password" placeholder="Digite sua nova senha ou a senha atual" required>
+                    </div>
+
+                    <div class="input-box">
+                        <label for="password">Imagem</label>
+                        <input id="image" type="file" name="image" accept="image/jpg, image/jpeg, image/png">
                     </div>
                 </div>
 
