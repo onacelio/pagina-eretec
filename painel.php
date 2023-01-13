@@ -113,11 +113,11 @@
         </div>
         <div class="links">
             Genêro: <?php if($_SESSION['genero'] == 'male') {
-                echo 'masculino';
+                echo strtoupper('masculino');
             } else if($_SESSION['genero'] == 'female') {
-                echo 'feminino';
+                echo strtoupper('feminino');
             } else if($_SESSION['genero'] == 'others') {
-                echo 'outros';
+                echo strtoupper('outros');
             } else {
                 echo '';
             }?>
