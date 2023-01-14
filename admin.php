@@ -12,7 +12,7 @@
     
     include('php/conexao.php');
 
-    $sqlQuery = $mysqli->query("SELECT * FROM usuarios") or die($mysqli->error);
+    $sqlQuery = $mysqli->query("SELECT * FROM usuarios WHERE level = 'user'") or die($mysqli->error);
 ?>
 
 <!DOCTYPE html>

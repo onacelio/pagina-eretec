@@ -9,10 +9,9 @@
     include('php/conexao.php'); 
 
     if(isset($_FILES['image'])) {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
         $image = $_FILES['image'];
-        $encrypted = password_hash($password, PASSWORD_DEFAULT);
         $id = $_SESSION['id'];
 
         if($image['error']) {
@@ -30,9 +29,7 @@
         $upload = move_uploaded_file($image['tmp_name'], $pasta . $newNameImage . "." . $extension);
 
         if($upload) {
-            $uparImagem = $mysqli->query("UPDATE usuarios SET image = 'uploaded-img/$newNameImage.$extension' WHERE id = $id") or die ($mysqli->error);
-            $sqlAlterarUser = $mysqli->query("UPDATE usuarios SET email = '$email' WHERE id = $id") or die ($mysqli->error);
-            $alterarUserPassword = $mysqli->query("UPDATE usuarios SET user_password = '$encrypted' WHERE id = $id") or die ($mysqli->error);
+            $uparImagem = $mysqli->query("UPDATE usuarios SET firstname = '$firstname', lastname = '$lastname', image = 'uploaded-img/$newNameImage.$extension' WHERE id = $id") or die ($mysqli->error);
             session_destroy();
             header('Location: index.php');
         }
@@ -66,19 +63,20 @@
 
                 <div class="input-group">
                     <div class="input-box">
-                        <label for="email">E-mail</label>
-                        <input id="email" type="email" name="email" placeholder="Digite seu novo e-mail" required value="<?php echo $_SESSION['email']?>">
+                        <label for="firstname">Nome</label>
+                        <input id="firstname" type="text" name="firstname" placeholder="Digite seu nome" required >
                     </div>
 
                     <div class="input-box">
-                        <label for="password">Senha</label>
-                        <input id="password" type="password" name="password" placeholder="Digite sua nova senha ou a senha atual" required>
+                        <label for="lastname">Sobrenome</label>
+                        <input id="lastname" type="text" name="lastname" placeholder="Digite seu sobrenome" required>
                     </div>
 
                     <div class="input-box">
                         <label for="password">Imagem</label>
                         <input id="image" type="file" name="image" accept="image/jpg, image/jpeg, image/png">
                     </div>
+
                 </div>
 
                 <div class="button">

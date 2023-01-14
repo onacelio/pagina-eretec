@@ -18,7 +18,10 @@
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-- PHP;
+- HTML e CSS;
+- JavaScript;
+- PHP, PHPMailer;
+- MySQL
 - MySQL;
 - CSS;
 
