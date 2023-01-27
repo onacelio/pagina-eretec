@@ -4,6 +4,8 @@
     Trabalho feito em grupo para a avaliação do conhecimento dos alunos em certas tecnologias
 </p>
 
+<p align="center">Caso chegue a usar o código crie uma pasta chamada "uploaded-img"para que as imagens possam ir ao servidor</p>
+
 <p align="center">
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -18,8 +20,10 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - HTML e CSS;
 - JavaScript;
-- PHP;
+- PHP, PHPMailer;
 - MySQL
+- MySQL;
+- CSS;
 
 ## 💻 Projeto
 

@@ -1,6 +1,12 @@
 <?php
 
-    if(isset($_POST['email'])) {
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+    
+    require 'lib/vendor/autoload.php';
+
+    if(isset($_POST['cadastre'])) {
 
         include('php/conexao.php');
 
@@ -10,21 +16,55 @@
         $date = filter_input(INPUT_POST, 'date');
         $password = filter_input(INPUT_POST, 'password');
         $confirmpassword = filter_input(INPUT_POST, 'confirmpassword');
+        $key = password_hash($email . date("Y-m-d H:i:s"), PASSWORD_DEFAULT);
         $gender = filter_input(INPUT_POST, 'gender');
 
-        if($email == 'administrador@admin.com') {
-            echo "<script>window.alert('Não é permitido usar o mesmo e-mail do administrador!')</script>";
-        } else {
+        $sqlCode = "SELECT * FROM usuarios WHERE email = '$email' LIMIT 1";
+        $sqlQuery = $mysqli->query($sqlCode) or die("Falha na execução do código SQL: " . $mysqli->error);
+        $usuario = $sqlQuery->fetch_assoc();
+
+        if(is_null($usuario)) {
             if($password === $confirmpassword) {
+                
                 $encrypted = password_hash($password, PASSWORD_DEFAULT);
     
-                $mysqli->query("INSERT INTO usuarios VALUES(0, '$firstname', '$lastname', '$email', '$date', '$encrypted', '$gender', now())") or die("Erro ao tentar cadastrar registro, nome: $firstname, sobrenome: $lastname, email: $email, senha: $encrypted, data: $date, genero: $gender");
-                
-                header('Location: index.php');
-    
+                $mysqli->query("INSERT INTO usuarios VALUES(0, 'user', '$firstname', '$lastname', '$email', '$date', '$encrypted', '$key', 3,'$gender', '', now())") or die("Erro ao tentar cadastrar registro, nome: $firstname, sobrenome: $lastname, email: $email, senha: $encrypted, data: $date, genero: $gender <br> $mysqli->error");
+
+                $mail = new PHPMailer(true);
+
+                try {
+                    
+                    /*Para enviar o e-mail de confirmaçãoestamos usando o gmail */
+                    $mail->CharSet = "UTF-8";
+                    $mail->isSMTP();                                            
+                    $mail->Host       = 'smtp.gmail.com';                    
+                    $mail->SMTPAuth   = true;                                   
+                    $mail->Username   = 'email da sua conta do gmail';                     
+                    $mail->Password   = 'senha da sua conta no gmail';                               
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            
+                    $mail->Port       = 465;                                    
+
+                    $mail->setFrom('email@gmail.com');
+                    $mail->addAddress($email, $firstname . $lastname);     
+                    
+                    $mail->isHTML(true);                                  
+                    $mail->Subject = 'Confirmação de e-mail';
+
+                    $body = "Prezado $firstname $lastname agradecemos a sua solicitação de cadastro em nosso site. <br><br> <a href='http://localhost/projetos/trabalho-pwII/php/confirmar-email.php?chave=$key'>Clique aqui</a> para a confirmação do e-mail";
+
+                    $mail->Body = $body;
+
+                    $mail->send();
+                    echo "<script>alert('Abra sua caixa de e-mail para a confirmaçãodo cadastro')<script>";
+                } catch (Exception $e) {
+                    echo "Erro ao enviar o e-mail!";
+                }
+
             } else{
                 echo "<script>window.alert('As senhas devem ser iguais')</script>";
             }
+        } else {
+            echo "<script>window.alert('Falha ao cadastrar, e-mail já cadastrado')</script>";
         }
 
     }
@@ -119,7 +159,7 @@
                 </div>
 
                 <div class="button">
-                    <button type="submit">Cadastrar</button>
+                    <button type="submit" name="cadastre">Cadastrar</button>
                 </div>
             </form>
         </div>

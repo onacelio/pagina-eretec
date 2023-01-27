@@ -15,17 +15,21 @@
             $sqlQuery = $mysqli->query($sqlCode) or die("Falha na execução do código SQL: " . $mysqli->error);
 
             $usuario = $sqlQuery->fetch_assoc();
-            if(password_verify($senha, $usuario['user_password'])){
+            if($usuario['sits_usuario_id'] != 1) {
+                echo "<script>alert('FALHA AO LOGAR! Necessário confirmar o e-mail!')</script>";
+            }elseif(password_verify($senha, $usuario['user_password'])){
                 
                 if(!isset($_SESSION)) {
                     session_start();
                 }
 
                 $_SESSION['id'] = $usuario['id'];
+                $_SESSION['level'] = $usuario['level'];
                 $_SESSION['nome'] = $usuario['firstname'];
                 $_SESSION['sobrenome'] = $usuario['lastname'];
                 $_SESSION['email'] = $usuario['email'];
                 $_SESSION['nascimento'] = $usuario['date_birth'];
+                $_SESSION['imagem'] = $usuario['image'];
                 $_SESSION['genero'] = $usuario['gender'];
                 header('Location: painel.php');
             } else {

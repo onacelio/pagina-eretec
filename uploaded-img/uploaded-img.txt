@@ -1,0 +1,1 @@
+Aqui é onde as imagens upadas atráves do alterar.php são colocadaspara que possa ser mostrado no site.
